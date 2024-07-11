@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CardTopHome from "../components/CardTopHome";
 import Categorie from "../components/Categorie";
 import CardFood from "../components/CardFood";
+import NavBar from "../components/NavBar";
 export default function Home() {
   return (
     <View style={styles.container}>
@@ -124,6 +125,7 @@ export default function Home() {
           </View>
         </View>
       </ScrollView>
+      <NavBar />
     </View>
   );
 }
