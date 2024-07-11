@@ -3,7 +3,7 @@ import React from "react";
 import img from "../assets/images/big-burger.png";
 import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { COLORS, SIZES } from "../constants/theme";
-export default function CardFoodFavorites() {
+export default function CardFoodFavorites(props) {
   return (
     <View style={styles.container}>
       <View style={{ width: 100 }}>
@@ -24,9 +24,25 @@ export default function CardFoodFavorites() {
           </View>
         </View>
       </View>
-      <View style={{ width: 20 }}>
-        <MaterialCommunityIcons name="delete" size={24} color="red" />
-      </View>
+      {props.screen == "Order" ? (
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <AntDesign name="pluscircle" size={24} color={COLORS.second} />
+          <Text style={{ fontSize: SIZES.large + 2, paddingVertical: 10 }}>
+            0
+          </Text>
+          <AntDesign name="minuscircle" size={24} color="red" />
+        </View>
+      ) : (
+        <View style={{ width: 20 }}>
+          <MaterialCommunityIcons name="delete" size={24} color="red" />
+        </View>
+      )}
     </View>
   );
 }

@@ -1,23 +1,27 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableNativeFeedback } from "react-native";
 import React from "react";
 import { COLORS, FONTS, SIZES } from "../constants/theme";
 import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function TopScreen(props) {
+  const navigation = useNavigation();
+  const handleClick = () => {
+    navigation.goBack();
+  };
   return (
     <View style={styles.topPage}>
       {props.Name == "Home" ? (
-        // <View style={styles.icon}>
-        //   <Feather name="map-pin" size={24} color="black" />
-        // </View>
         <View style={styles.icon}>
           <Feather name="menu" size={24} color="black" />
         </View>
       ) : (
-        <View style={styles.icon}>
-          <Entypo name="chevron-left" size={24} color="black" />
-        </View>
+        <TouchableNativeFeedback onPress={handleClick}>
+          <View style={styles.icon}>
+            <Entypo name="chevron-left" size={24} color="black" />
+          </View>
+        </TouchableNativeFeedback>
       )}
       <View
         style={{

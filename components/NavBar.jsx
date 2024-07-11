@@ -11,6 +11,7 @@ export default function NavBar() {
   return (
     <View style={styles.container}>
       <TouchableNativeFeedback
+        style={styles.buttonClick}
         onPress={() => {
           navigation.navigate("Home");
         }}
@@ -85,7 +86,6 @@ const styles = StyleSheet.create({
     height: 40,
     paddingTop: 6,
     padding: 5,
-    // backgroundColor: COLORS.second,
     borderRadius: 15,
     marginHorizontal: 5,
     justifyContent: "center",

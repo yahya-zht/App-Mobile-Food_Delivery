@@ -1,22 +1,21 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import Home from "../screens/Home";
 import Favorites from "../screens/Favorites";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Order from "../screens/Order";
 import Profile from "../screens/Profile";
+import { createStackNavigator } from "@react-navigation/stack";
 
 export default function Router() {
-  const Stack = createNativeStackNavigator();
-
+  const Stack = createStackNavigator();
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Favorites"
+        initialRouteName="Home"
         screenOptions={{
           headerShown: false,
-          animationEnabled: false,
+          // animationEnabled: false,
+          animationEnabled: "none",
         }}
       >
         <Stack.Screen name="Home" component={Home} />

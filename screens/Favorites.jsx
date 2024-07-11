@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   containerArticles: {
     flex: 1,
     backgroundColor: COLORS.second,
-    paddingTop: 5,
+    paddingVertical: 5,
     paddingHorizontal: 10,
     marginHorizontal: 20,
     marginBottom: 65,
