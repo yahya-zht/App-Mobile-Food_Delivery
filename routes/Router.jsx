@@ -4,6 +4,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import Home from "../screens/Home";
 import Favorites from "../screens/Favorites";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Order from "../screens/Order";
+import Profile from "../screens/Profile";
 
 export default function Router() {
   const Stack = createNativeStackNavigator();
@@ -19,6 +21,8 @@ export default function Router() {
       >
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Favorites" component={Favorites} />
+        <Stack.Screen name="Order" component={Order} />
+        <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>
   );
