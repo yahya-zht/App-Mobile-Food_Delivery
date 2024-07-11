@@ -11,7 +11,7 @@ import NavBar from "../components/NavBar";
 export default function Home() {
   return (
     <View style={styles.container}>
-      <TopScreen Name={"Home"} />
+      <TopScreen Name={"Home"} icon={"menu"} />
       <View style={styles.containerSearch}>
         <View style={styles.search}>
           <AntDesign
@@ -72,7 +72,7 @@ export default function Home() {
             </ScrollView>
           </View>
         </View>
-        <View>
+        <View style={{ marginBottom: 65 }}>
           <View
             style={{
               flexDirection: "row",

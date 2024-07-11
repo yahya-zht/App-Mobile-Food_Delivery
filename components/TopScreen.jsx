@@ -7,9 +7,18 @@ import { Entypo } from "@expo/vector-icons";
 export default function TopScreen(props) {
   return (
     <View style={styles.topPage}>
-      <View style={styles.icon}>
-        <Feather name="menu" size={24} color="black" />
-      </View>
+      {props.Name == "Home" ? (
+        // <View style={styles.icon}>
+        //   <Feather name="map-pin" size={24} color="black" />
+        // </View>
+        <View style={styles.icon}>
+          <Feather name="menu" size={24} color="black" />
+        </View>
+      ) : (
+        <View style={styles.icon}>
+          <Entypo name="chevron-left" size={24} color="black" />
+        </View>
+      )}
       <View
         style={{
           flex: 1,
@@ -19,9 +28,11 @@ export default function TopScreen(props) {
       >
         <Text style={styles.titleScreen}>{props.Name}</Text>
       </View>
-      <View style={styles.icon}>
-        <Entypo name="wallet" size={24} color="black" />
-      </View>
+      {props.Name == "Home" && (
+        <View style={styles.icon}>
+          <Entypo name="wallet" size={24} color="black" />
+        </View>
+      )}
     </View>
   );
 }
