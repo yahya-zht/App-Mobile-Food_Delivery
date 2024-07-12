@@ -136,7 +136,8 @@ export default function Order() {
                 color: COLORS.white,
               }}
             >
-              Pay Now
+              {/* Pay Now */}
+              Confirm Order
             </Text>
           </TouchableNativeFeedback>
         </View>

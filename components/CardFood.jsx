@@ -1,53 +1,67 @@
-import { View, Text, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableNativeFeedback,
+} from "react-native";
 import React from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { COLORS, FONTS, SIZES } from "../constants/theme";
 import img from "../assets/images/big-burger.png";
+import { useNavigation } from "@react-navigation/native";
 export default function CardFood() {
+  const navigation = useNavigation();
+  const handleClick = () => {
+    navigation.navigate("FoodDetails");
+  };
   return (
-    <View style={styles.container}>
-      <View>
-        <Image source={img} style={styles.image} />
-      </View>
-      <View style={styles.icon}>
-        <AntDesign name="hearto" size={20} color="red" />
-        {/* <AntDesign name="heart" size={20} color="red" /> */}
-      </View>
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+    <TouchableNativeFeedback onPress={handleClick}>
+      <View style={styles.container}>
         <View>
-          <Text style={styles.nameFood}>Food Name</Text>
+          <Image source={img} style={styles.image} />
+        </View>
+        <View style={styles.icon}>
+          <AntDesign name="hearto" size={20} color="red" />
+        </View>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <View>
+            <Text style={styles.nameFood}>Food Name</Text>
+            <View
+              style={{
+                flexDirection: "row",
+              }}
+            >
+              <AntDesign name="star" size={20} color="gold" />
+              <Text style={{ marginStart: 10, fontSize: SIZES.medium }}>
+                4.7
+              </Text>
+            </View>
+            <Text
+              style={{
+                color: COLORS.second,
+                fontSize: SIZES.large,
+                fontWeight: FONTS.bold,
+                marginTop: 3,
+              }}
+            >
+              $15.00
+            </Text>
+          </View>
           <View
             style={{
-              flexDirection: "row",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            <AntDesign name="star" size={20} color="gold" />
-            <Text style={{ marginStart: 10, fontSize: SIZES.medium }}>4.7</Text>
+            <AntDesign name="pluscircle" size={20} color={COLORS.second} />
+            <Text style={{ fontSize: SIZES.large }}>0</Text>
+            <AntDesign name="minuscircle" size={20} color={COLORS.second} />
           </View>
-          <Text
-            style={{
-              color: COLORS.second,
-              fontSize: SIZES.large,
-              fontWeight: FONTS.bold,
-              marginTop: 3,
-            }}
-          >
-            $15.00
-          </Text>
-        </View>
-        <View
-          style={{
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <AntDesign name="pluscircle" size={20} color={COLORS.second} />
-          <Text style={{ fontSize: SIZES.large }}>0</Text>
-          <AntDesign name="minuscircle" size={20} color={COLORS.second} />
         </View>
       </View>
-    </View>
+    </TouchableNativeFeedback>
   );
 }
 const styles = StyleSheet.create({
