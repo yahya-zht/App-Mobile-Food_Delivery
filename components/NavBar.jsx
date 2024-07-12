@@ -5,20 +5,30 @@ import { AntDesign } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 export default function NavBar() {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const getColor = (screen) =>
+    route.name === screen ? COLORS.white : COLORS.second;
+  const getBackgroundColor = (screen) =>
+    route.name === screen ? COLORS.second : null;
   return (
     <View style={styles.container}>
       <TouchableNativeFeedback
-        style={styles.buttonClick}
         onPress={() => {
           navigation.navigate("Home");
         }}
       >
-        <View style={styles.buttonClick}>
-          <AntDesign name="home" size={20} color="white" />
-          <Text style={{ color: COLORS.white }}>Home</Text>
+        <View
+          style={[
+            styles.button,
+            { backgroundColor: getBackgroundColor("Home") },
+          ]}
+        >
+          <AntDesign name="home" size={20} color={getColor("Home")} />
+          <Text style={{ color: getColor("Home") }}>Home</Text>
         </View>
       </TouchableNativeFeedback>
       <TouchableNativeFeedback
@@ -26,9 +36,14 @@ export default function NavBar() {
           navigation.navigate("Favorites");
         }}
       >
-        <View style={styles.button}>
-          <Feather name="heart" size={20} color={COLORS.second} />
-          <Text style={{ color: COLORS.second }}>Favorites</Text>
+        <View
+          style={[
+            styles.button,
+            { backgroundColor: getBackgroundColor("Favorites") },
+          ]}
+        >
+          <Feather name="heart" size={20} color={getColor("Favorites")} />
+          <Text style={{ color: getColor("Favorites") }}>Favorites</Text>
         </View>
       </TouchableNativeFeedback>
       <TouchableNativeFeedback
@@ -36,9 +51,18 @@ export default function NavBar() {
           navigation.navigate("Order");
         }}
       >
-        <View style={styles.button}>
-          <FontAwesome5 name="clipboard-list" size={20} color={COLORS.second} />
-          <Text style={{ color: COLORS.second }}>Order</Text>
+        <View
+          style={[
+            styles.button,
+            { backgroundColor: getBackgroundColor("Order") },
+          ]}
+        >
+          <FontAwesome5
+            name="clipboard-list"
+            size={20}
+            color={getColor("Order")}
+          />
+          <Text style={{ color: getColor("Order") }}>Order</Text>
         </View>
       </TouchableNativeFeedback>
 
@@ -47,9 +71,18 @@ export default function NavBar() {
           navigation.navigate("Profile");
         }}
       >
-        <View style={styles.button}>
-          <FontAwesome6 name="user-circle" size={20} color={COLORS.second} />
-          <Text style={{ color: COLORS.second }}>Profile</Text>
+        <View
+          style={[
+            styles.button,
+            { backgroundColor: getBackgroundColor("Profile") },
+          ]}
+        >
+          <FontAwesome6
+            name="user-circle"
+            size={20}
+            color={getColor("Profile")}
+          />
+          <Text style={{ color: getColor("Profile") }}>Profile</Text>
         </View>
       </TouchableNativeFeedback>
     </View>

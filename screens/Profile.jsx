@@ -9,6 +9,7 @@ import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
+import NavBar from "../components/NavBar";
 export default function Profile() {
   return (
     <View style={styles.container}>
@@ -79,6 +80,7 @@ export default function Profile() {
           <Entypo name="chevron-right" size={24} color="black" />
         </View>
       </View>
+      <NavBar />
     </View>
   );
 }
