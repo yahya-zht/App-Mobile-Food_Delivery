@@ -5,26 +5,41 @@ import {
   TextInput,
   TouchableNativeFeedback,
   Text,
+  FlatList,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import TopScreen from "../components/TopScreen";
 import { COLORS, FONTS, SIZES } from "../constants/theme";
 import CardFoodFavorites from "../components/CardFoodFavorites";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import FoodData from "../assets/Data/FoodData";
 export default function Order() {
+  const [FoodOnOrder, serFoodOnOrder] = useState(FoodData);
   return (
     <View style={styles.container}>
       <TopScreen Name={"Orders"} />
       <View style={styles.containerArticles}>
-        <ScrollView>
-          <CardFoodFavorites screen={"Order"} />
-          <CardFoodFavorites screen={"Order"} />
-          <CardFoodFavorites screen={"Order"} />
-          <CardFoodFavorites screen={"Order"} />
-          <CardFoodFavorites screen={"Order"} />
-          <CardFoodFavorites screen={"Order"} />
-          <CardFoodFavorites screen={"Order"} />
-        </ScrollView>
+        <View style={styles.containerData}>
+          <FlatList
+            data={FoodOnOrder}
+            contentContainerStyle={styles.listContentContainer}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.cardContainer}>
+                <CardFoodFavorites
+                  screen={"Order"}
+                  name={item.name}
+                  price={item.price}
+                  rating={item.rating}
+                  image={item.image}
+                  category={item.category}
+                  isFavorite={item.isFavorite}
+                  description={item.description}
+                />
+              </View>
+            )}
+          />
+        </View>
       </View>
       <View style={styles.calculate}>
         <View
@@ -136,7 +151,6 @@ export default function Order() {
                 color: COLORS.white,
               }}
             >
-              {/* Pay Now */}
               Confirm Order
             </Text>
           </TouchableNativeFeedback>
@@ -180,5 +194,15 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 10,
     // paddingBottom: 20,
     // borderRadius: 20,
+  },
+  containerData: {
+    flex: 1,
+  },
+  listContentContainer: {
+    paddingHorizontal: 5,
+  },
+  cardContainer: {
+    flex: 1,
+    margin: 5,
   },
 });

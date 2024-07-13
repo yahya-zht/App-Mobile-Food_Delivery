@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TextInput, ScrollView } from "react-native";
+import { View, Text, StyleSheet, TextInput, FlatList } from "react-native";
 import React from "react";
 import { COLORS, FONTS, SIZES } from "../constants/theme";
 import TopScreen from "../components/TopScreen";
@@ -8,6 +8,9 @@ import CardTopHome from "../components/CardTopHome";
 import Categorie from "../components/Categorie";
 import CardFood from "../components/CardFood";
 import NavBar from "../components/NavBar";
+import FoodsData from "../assets/Data/FoodData";
+import Categories from "../assets/Data/Categories";
+
 export default function Home() {
   return (
     <View style={styles.container}>
@@ -20,7 +23,7 @@ export default function Home() {
             color="black"
             style={{ marginEnd: 10 }}
           />
-          <TextInput placeholder="Search your food..."></TextInput>
+          <TextInput placeholder="Search your food..." />
         </View>
         <View>
           <Ionicons
@@ -30,129 +33,71 @@ export default function Home() {
           />
         </View>
       </View>
-      <ScrollView>
-        <CardTopHome />
-        <View style={{ marginBottom: 5 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginHorizontal: 20,
-              marginBottom: 5,
-            }}
-          >
-            <Text style={{ fontSize: SIZES.large, fontWeight: FONTS.bold }}>
-              Categories
-            </Text>
-            <Text
-              style={{
-                fontSize: SIZES.medium,
-                color: COLORS.second,
-                textDecorationLine: "underline",
-              }}
-            >
-              Sell All Categories
-            </Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <ScrollView
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-            >
-              <Categorie />
-              <Categorie />
-              <Categorie />
-              <Categorie />
-              <Categorie />
-              <Categorie />
-              <Categorie />
-              <Categorie />
-              <Categorie />
-              <Categorie />
-            </ScrollView>
-          </View>
-        </View>
-        <View style={{ marginBottom: 65 }}>
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginHorizontal: 20,
-              marginBottom: 5,
-              alignItems: "center",
-            }}
-          >
-            <Text style={{ fontSize: SIZES.large, fontWeight: FONTS.bold }}>
-              Top Picks
-            </Text>
-            <View style={styles.icon}>
-              <AntDesign name="right" size={24} color="black" />
+      <FlatList
+        ListHeaderComponent={
+          <>
+            <CardTopHome />
+            <View style={{ marginBottom: 5 }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  marginHorizontal: 20,
+                  marginBottom: 5,
+                }}
+              >
+                <Text style={{ fontSize: SIZES.large, fontWeight: FONTS.bold }}>
+                  Categories
+                </Text>
+                <Text
+                  style={{
+                    fontSize: SIZES.medium,
+                    color: COLORS.second,
+                    textDecorationLine: "underline",
+                  }}
+                >
+                  See All Categories
+                </Text>
+              </View>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={Categories}
+                renderItem={({ item }) => (
+                  <Categorie name={item.name} image={item.image} />
+                )}
+                keyExtractor={(item, index) => index.toString()}
+              />
             </View>
+          </>
+        }
+        data={FoodsData}
+        contentContainerStyle={styles.listContentContainer}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.cardContainer}>
+            <CardFood
+              name={item.name}
+              price={item.price}
+              rating={item.rating}
+              image={item.image}
+              category={item.category}
+              isFavorite={item.isFavorite}
+              description={item.description}
+            />
           </View>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              flexWrap: "wrap",
-              marginHorizontal: 15,
-            }}
-          >
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-            <CardFood />
-          </View>
-        </View>
-      </ScrollView>
+        )}
+        numColumns={2}
+      />
       <NavBar />
     </View>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.white,
-  },
-  topPage: {
-    padding: 10,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    paddingHorizontal: 15,
-  },
-  icon: {
-    borderRadius: 20,
-    backgroundColor: COLORS.cardBg,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 40,
-    height: 40,
-  },
-  titleScreen: {
-    fontSize: SIZES.xLarge,
-    fontWeight: FONTS.bold,
-    color: COLORS.black,
-    marginLeft: 10,
   },
   containerSearch: {
     flexDirection: "row",
@@ -182,5 +127,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 40,
     height: 40,
+  },
+  containerData: {
+    flex: 1,
+  },
+  listContentContainer: {
+    paddingHorizontal: 5,
+    paddingBottom: 60,
+  },
+  cardContainer: {
+    flex: 1,
+    margin: 5,
   },
 });

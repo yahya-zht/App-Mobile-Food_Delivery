@@ -11,31 +11,32 @@ import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import { COLORS, SIZES } from "../constants/theme";
 import { useNavigation } from "@react-navigation/native";
 export default function CardFoodFavorites(props) {
+  const FoodData = props;
   const navigation = useNavigation();
   const handleClick = () => {
-    navigation.navigate("FoodDetails");
+    navigation.navigate("FoodDetails", { FoodData });
   };
   return (
     <TouchableNativeFeedback onPress={handleClick}>
       <View style={styles.container}>
         <View style={{ width: 100 }}>
-          <Image source={img} style={styles.image} />
+          <Image source={props.image} style={styles.image} />
         </View>
         <View style={{ flex: 1, marginEnd: 20 }}>
-          <Text style={{ fontWeight: "bold", fontSize: 18 }}>Big Burger</Text>
+          <Text style={{ fontWeight: "bold", fontSize: 18 }}>{props.name}</Text>
           <Text style={{ color: "#666", fontSize: 14 }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            {props.description}
           </Text>
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <Text style={{ color: COLORS.second, fontSize: SIZES.large }}>
-              $12.99
+              ${props.price}.99
             </Text>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <AntDesign name="star" size={15} color="gold" />
               <Text style={{ marginStart: 5, fontSize: SIZES.medium }}>
-                4.7
+                {props.rating}
               </Text>
             </View>
           </View>
@@ -78,5 +79,6 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 90,
+    resizeMode: "contain",
   },
 });

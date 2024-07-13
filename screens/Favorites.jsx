@@ -1,26 +1,36 @@
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import React from "react";
 import NavBar from "../components/NavBar";
-import { Entypo } from "@expo/vector-icons";
 import TopScreen from "../components/TopScreen";
 import { COLORS } from "../constants/theme";
+import FoodsData from "../assets/Data/FoodData";
 import CardFoodFavorites from "../components/CardFoodFavorites";
 export default function Favorites() {
+  const FoodFavorites = FoodsData.filter((f) => f.isFavorite === true);
   return (
     <View style={styles.container}>
       <TopScreen Name={"Favorites"} />
       <View style={styles.containerArticles}>
-        <ScrollView>
-          <CardFoodFavorites />
-          <CardFoodFavorites />
-          <CardFoodFavorites />
-          <CardFoodFavorites />
-          <CardFoodFavorites />
-          <CardFoodFavorites />
-          <CardFoodFavorites />
-          <CardFoodFavorites />
-          <CardFoodFavorites />
-        </ScrollView>
+        <View style={styles.containerData}>
+          <FlatList
+            data={FoodFavorites}
+            contentContainerStyle={styles.listContentContainer}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <View style={styles.cardContainer}>
+                <CardFoodFavorites
+                  name={item.name}
+                  price={item.price}
+                  rating={item.rating}
+                  image={item.image}
+                  category={item.category}
+                  isFavorite={item.isFavorite}
+                  description={item.description}
+                />
+              </View>
+            )}
+          />
+        </View>
       </View>
       <NavBar />
     </View>
@@ -44,5 +54,15 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 20,
     fontWeight: "bold",
+  },
+  containerData: {
+    flex: 1,
+  },
+  listContentContainer: {
+    paddingHorizontal: 5,
+  },
+  cardContainer: {
+    flex: 1,
+    margin: 5,
   },
 });

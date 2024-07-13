@@ -5,18 +5,23 @@ import {
   Image,
   TouchableNativeFeedback,
 } from "react-native";
-import React from "react";
-import image from "../assets/images/box-italian-pizza.png";
+import React, { useState } from "react";
 import { COLORS, FONTS, SIZES } from "../constants/theme";
-import { Entypo } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-export default function FoodDetails() {
-  const navigation = useNavigation();
+import { Entypo, AntDesign, Ionicons } from "@expo/vector-icons";
+export default function FoodDetails({ route, navigation }) {
+  const [counter, setCounter] = useState(0);
+  const handleAddition = () => {
+    setCounter(counter + 1);
+  };
+  const handleReduction = () => {
+    if (counter > 0) setCounter(counter - 1);
+  };
   const handleClick = () => {
     navigation.goBack();
   };
+  const { FoodData } = route.params;
+  console.log("FoodData===>", FoodData);
+  console.log("FoodData.isFavorite===>", FoodData.isFavorite);
   const handleFavorite = () => {};
   return (
     <View style={styles.container}>
@@ -27,16 +32,20 @@ export default function FoodDetails() {
       </TouchableNativeFeedback>
       <TouchableNativeFeedback onPress={handleFavorite}>
         <View style={styles.iconHeart}>
-          <AntDesign name="hearto" size={20} color="white" />
+          {FoodData.isFavorite ? (
+            <Ionicons name="heart" size={24} color="red" />
+          ) : (
+            <Ionicons name="heart-outline" size={24} color={COLORS.white} />
+          )}
         </View>
       </TouchableNativeFeedback>
-      <View style={{ borderBottomLeftRadius: 50 }}>
-        <Image source={image} style={styles.image} />
+      <View style={{ flex: 1 }}>
+        <Image source={FoodData.image} style={styles.image} />
       </View>
       <View style={{ flex: 1, margin: 10 }}>
-        <Text style={styles.categorie}>Pizza</Text>
+        <Text style={styles.categorie}>{FoodData.category}</Text>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.name}>Box italian Pizza</Text>
+          <Text style={styles.name}>{FoodData.name}</Text>
           <View
             style={{
               flexDirection: "row",
@@ -44,21 +53,27 @@ export default function FoodDetails() {
               justifyContent: "center",
             }}
           >
-            <AntDesign name="minuscircle" size={24} color={COLORS.second} />
-            <Text style={{ fontSize: SIZES.large + 5, marginHorizontal: 10 }}>
-              0
+            <TouchableNativeFeedback onPress={handleReduction}>
+              <AntDesign name="minuscircle" size={24} color="red" />
+            </TouchableNativeFeedback>
+            <Text
+              style={{
+                fontSize: SIZES.large + 5,
+                width: 40,
+                textAlign: "center",
+              }}
+            >
+              {counter}
             </Text>
-            <AntDesign name="pluscircle" size={24} color={COLORS.second} />
+            <TouchableNativeFeedback onPress={handleAddition}>
+              <AntDesign name="pluscircle" size={24} color={COLORS.second} />
+            </TouchableNativeFeedback>
           </View>
         </View>
         <Text style={{ fontSize: SIZES.medium, fontWeight: FONTS.bold }}>
           Description
         </Text>
-        <Text style={styles.description}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec at
-          metus nec nisi euismod tempus vel at lectus. Sed lobortis facilisis
-          velit, vel elementum nunc semper vel.
-        </Text>
+        <Text style={styles.description}>{FoodData.description}</Text>
       </View>
       <View style={styles.containerButton}>
         <Text
@@ -68,7 +83,7 @@ export default function FoodDetails() {
             color: COLORS.second,
           }}
         >
-          $15.00
+          ${FoodData.price}.00
         </Text>
         <View style={styles.button}>
           <Ionicons name="basket" size={24} color="white" />
@@ -80,7 +95,7 @@ export default function FoodDetails() {
               fontSize: SIZES.large,
             }}
           >
-            Add to Cart
+            Add to order
           </Text>
         </View>
       </View>
@@ -94,6 +109,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "auto",
+    flex: 1,
     backgroundColor: COLORS.bg,
     resizeMode: "contain",
   },

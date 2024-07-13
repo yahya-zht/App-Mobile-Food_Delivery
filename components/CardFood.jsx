@@ -5,28 +5,41 @@ import {
   Image,
   TouchableNativeFeedback,
 } from "react-native";
-import React from "react";
-import { AntDesign } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { COLORS, FONTS, SIZES } from "../constants/theme";
-import img from "../assets/images/big-burger.png";
 import { useNavigation } from "@react-navigation/native";
-export default function CardFood() {
+export default function CardFood(props) {
+ 
+  const [counter, setCounter] = useState(0);
+  const handleAddition = () => {
+    setCounter(counter + 1);
+  };
+  const handleReduction = () => {
+    if (counter > 0) setCounter(counter - 1);
+  };
   const navigation = useNavigation();
+  const FoodData = props;
   const handleClick = () => {
-    navigation.navigate("FoodDetails");
+    navigation.navigate("FoodDetails", { FoodData });
   };
   return (
     <TouchableNativeFeedback onPress={handleClick}>
       <View style={styles.container}>
         <View>
-          <Image source={img} style={styles.image} />
+          <Image source={props.image} style={styles.image} />
         </View>
         <View style={styles.icon}>
-          <AntDesign name="hearto" size={20} color="red" />
+          {/* <AntDesign name="hearto" size={20} color="red" /> */}
+          {props.isFavorite ? (
+            <Ionicons name="heart" size={24} color="red" />
+          ) : (
+            <Ionicons name="heart-outline" size={24} color="red" />
+          )}
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View>
-            <Text style={styles.nameFood}>Food Name</Text>
+            <Text style={styles.nameFood}>{props.name}</Text>
             <View
               style={{
                 flexDirection: "row",
@@ -34,7 +47,7 @@ export default function CardFood() {
             >
               <AntDesign name="star" size={20} color="gold" />
               <Text style={{ marginStart: 10, fontSize: SIZES.medium }}>
-                4.7
+                {props.rating}
               </Text>
             </View>
             <Text
@@ -45,7 +58,7 @@ export default function CardFood() {
                 marginTop: 3,
               }}
             >
-              $15.00
+              ${props.price}.00
             </Text>
           </View>
           <View
@@ -55,9 +68,21 @@ export default function CardFood() {
               justifyContent: "center",
             }}
           >
-            <AntDesign name="pluscircle" size={20} color={COLORS.second} />
-            <Text style={{ fontSize: SIZES.large }}>0</Text>
-            <AntDesign name="minuscircle" size={20} color={COLORS.second} />
+            <TouchableNativeFeedback onPress={handleAddition}>
+              <AntDesign name="pluscircle" size={20} color={COLORS.second} />
+            </TouchableNativeFeedback>
+            <Text
+              style={{
+                fontSize: SIZES.large,
+                height: 30,
+                textAlignVertical: "center",
+              }}
+            >
+              {counter}
+            </Text>
+            <TouchableNativeFeedback onPress={handleReduction}>
+              <AntDesign name="minuscircle" size={20} color={COLORS.second} />
+            </TouchableNativeFeedback>
           </View>
         </View>
       </View>
@@ -66,7 +91,7 @@ export default function CardFood() {
 }
 const styles = StyleSheet.create({
   container: {
-    width: "48%",
+    width: "100%",
     backgroundColor: COLORS.cardBg,
     borderRadius: 10,
     padding: 10,
@@ -76,6 +101,7 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: 150,
+    resizeMode: "contain",
   },
   nameFood: {
     fontWeight: "bold",
