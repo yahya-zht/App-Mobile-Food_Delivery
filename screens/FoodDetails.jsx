@@ -20,8 +20,7 @@ export default function FoodDetails({ route, navigation }) {
     navigation.goBack();
   };
   const { FoodData } = route.params;
-  console.log("FoodData===>", FoodData);
-  console.log("FoodData.isFavorite===>", FoodData.isFavorite);
+  
   const handleFavorite = () => {};
   return (
     <View style={styles.container}>

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "food_delivery",
+    "name": "Food Delivery",
     "slug": "food_delivery",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -18,10 +18,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.yahya_dev.food_delivery"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c917aed1-5a49-4568-8b9e-5e20b7ec5a91"
+      }
     }
   }
 }
